@@ -1,5 +1,4 @@
 // models/blogposts
-
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v1');
@@ -18,7 +17,7 @@ const show = blogposts_id => {
   return blogpost;
 };
 
-const create = ({title, content}) => {
+const create = ( {title, content} ) => {
   const blogpostJSON = fs.readFileSync(blogpostsPath, 'utf-8');
   const blogposts = JSON.parse(blogpostJSON);
   const newBlogPost = {
@@ -33,11 +32,12 @@ const create = ({title, content}) => {
 };
 
 const update = (blogposts_id, data ) => {
-  const blogpostJSON = fs.readFileSync(blogpostsPath, 'utf-8');
-  const blogposts = JSON.parse(blogpostJSON);
+  let updatedBlogPost;
+  const blogpostsJSON = fs.readFileSync(blogpostsPath, 'utf-8');
+  const blogposts = JSON.parse(blogpostsJSON);
   const updatedBlogPosts = blogposts.map( blogpost => {
     if (blogpost.id === blogposts_id) {
-      const updatedBlogPost = { ...blogpost, ...data }
+     updatedBlogPost = { ...blogpost, ...data }
       return updatedBlogPost;
     } else {
       return blogpost;
@@ -49,11 +49,12 @@ const update = (blogposts_id, data ) => {
 };
 
 const destroy = blogposts_id => {
+  let deletedBlogPost;
   const blogpostJSON = fs.readFileSync(blogpostsPath, 'utf-8');
   const blogposts = JSON.parse(blogpostJSON);
   const remainingBlogPosts = blogposts.filter( blogpost => {
     if (blogpost.id === blogposts_id) {
-      const deletedBlogPost = blogpost;
+     deletedBlogPost = blogpost;
       return false;
     } else {
       return true;
